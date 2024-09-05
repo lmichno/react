@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .klasa {
+            color: red;
+            text-align: center;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="react-app"></div>
+    <script type="text/babel">
+
+        let data = [
+            {
+                id: 1,
+                quantity: 1,
+                name: "masło"
+            }, {
+                id: 2,
+                quantity: 3,
+                name: "mleko"
+            }, {
+                id: 3,
+                quantity: 6,
+                name: "chleb"
+            }
+        ]
+
+        class Start extends React.Component {
+            render() {
+                return (
+                    <>
+                        <div className="left">
+                            <List1 />
+                        </div>
+                        <div className="right">
+                            <List2 />
+                        </div>
+                    </>
+                );
+            }
+        }
+        class List2 extends React.Component {
+            render() {
+                let t = []
+                data.forEach((element) => {
+                    t.push(<ListItem key={element.id} quantity={element.quantity} name={element.name} />)
+                });
+                return (
+                    <div>
+
+                        {
+                            t
+                        }
+                    </div>
+                );
+            }
+        }
+
+        class List1 extends React.Component {
+            render() {
+                return (
+                    <div>
+                        <ListItem quantity={data[0].quantity} name={data[0].name} />
+                        <ListItem quantity={data[1].quantity} name={data[1].name} />
+                        <ListItem quantity={data[2].quantity} name={data[2].name} />
+                    </div>
+                );
+            }
+        }
+
+        class ListItem extends React.Component {
+            render() {
+                return (
+                    <div>
+                        {this.props.quantity} x {this.props.name}
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <Start />,
+            document.getElementById('react-app')
+        );
+
+    </script>
+</body>
+
+</html>
