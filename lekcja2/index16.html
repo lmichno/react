@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .div {
+            border: 3px dotted red;
+            background-color: rgb(231, 231, 231);
+            padding: 1px;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            flex-direction: column;
+        }
+
+        .globalDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        button {
+            width: 70px;
+            height: 30px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .big {
+            font-size: 70px;
+            color: grey;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .column {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="react-app"></div>
+    <script type="text/babel">
+
+        class FoodList extends React.Component {
+            constructor() {
+                super();
+
+                this.state = {
+                    list: [],
+                    num: 0
+                };
+            }
+
+            render() {
+                return (
+                    <div className="column">
+                        <p>Parent component</p>
+                        <div className="row">
+                            <button onClick={this.addT}>dodaj tanie</button>
+                            <button onClick={this.addH}>dodaj drogie</button>
+                        </div>
+                        <div className="row">
+                            {this.state.list}
+                        </div>
+                    </div>
+                )
+            }
+        }
+
+        class Food extends React.Component {
+
+            render() {
+                return (
+                    <div className="div">
+                        {this.props.food}
+                        <br />
+                        {this.props.num}
+                    </div>
+                );
+            }
+        }
+
+        class Start extends React.Component {
+            render() {
+
+                return (
+                    <div className="globalDiv">
+                        <FoodList />
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <Start />,
+            document.getElementById('react-app')
+        );
+
+    </script>
+</body>
+
+</html>

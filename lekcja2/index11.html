@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .div {
+            border: 1px dotted red;
+            background-color: lightgray;
+            padding: 1px;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            flex-direction: column;
+        }
+
+        .globalDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="react-app"></div>
+    <script type="text/babel">
+
+        class Square extends React.Component {
+            constructor() {
+                super();
+                this.state = { a: 1, b: 2, c: 3 };
+            }
+
+            render() {
+                return (<div className="div">
+                    <p>a = {this.state.a}</p>
+                    <p>b = {this.state.b}</p>
+                    <p>c = {this.state.c}</p>
+                </div>
+                )
+            }
+        }
+
+        class Start extends React.Component {
+            render() {
+                let squares = []
+                for (let i = 0; i < 3; i++) {
+                    squares.push(<Square key={i} />)
+                }
+
+                return (
+                    <div className="globalDiv">
+                        {squares}
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <Start />,
+            document.getElementById('react-app')
+        );
+
+    </script>
+</body>
+
+</html>
