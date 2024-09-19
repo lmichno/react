@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .div {
+            border: 3px dotted red;
+            background-color: rgb(231, 231, 231);
+            padding: 1px;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            flex-direction: column;
+        }
+
+        .globalDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        button {
+            width: 70px;
+
+            padding: 5px;
+            text-align: center;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .big {
+            font-size: 70px;
+            color: grey;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .column {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="react-app"></div>
+    <script type="text/babel">
+
+        class MyForm extends React.Component {
+
+            constructor() {
+                super();
+                this.state = {
+                    array: [
+                        { checked: false, value: 1 },
+                        { checked: false, value: 2 },
+                        { checked: false, value: 3 },
+                        { checked: false, value: 10 },
+                        { checked: false, value: 20 },
+                    ],
+                    data: []
+
+                };
+            }
+
+            handleChange = (event) => {
+                let tmp = this.state.data
+                tmp.push(event)
+                console.log(tmp);
+                this.setState({ data: tmp });
+            }
+
+
+
+            handleSubmit = (event) => {
+                alert(this.state.data)
+                this.setState({
+                    data: []
+                })
+                event.preventDefault();
+            }
+
+            render() {
+
+                let comp = []
+                this.state.array.forEach(element => {
+                    comp.push(<MySelect data={element} handleChange={this.handleChange} key={element.value} />)
+                });
+
+                return (
+                    <form onSubmit={this.handleSubmit} className="column" style={{
+                        border: '3px solid lightblue',
+                        borderRadius: '10px',
+                        backgroundColor: 'rgb(240, 240, 240)',
+                        padding: '15px',
+                        margin: '5px'
+                    }}>
+                        <h1>komponent MyForm</h1>
+                        {comp}
+                        <p>suma = {this.state.data} $</p>
+                        <button onClick={this.handleSubmit}>send</button>
+                    </form>
+                );
+            }
+        }
+
+        class MySelect extends React.Component {
+
+            constructor() {
+                super();
+                this.state = {
+                    option: this.props.data.checked
+                }
+            }
+
+            handle = (event) => {
+                this.setState({
+
+                })
+                if (option) {
+
+                }
+            }
+
+            render() {
+
+                return (
+                    <div className="row" style={{
+                        padding: '10px',
+                        margin: '5px',
+                        border: '3px blue dotted',
+                        borderRadius: '10px',
+                        width: '230px'
+                    }}>
+
+                        <p style={{ marginRight: '5px' }}>comp MyCheckbox</p>
+                        <input type="checkbox" value={this.props.data.value} onChange={this.handle} />
+                        <p style={{ marginLeft: '5px' }}>{this.props.data.value}$</p>
+                    </div>
+                );
+            }
+        }
+
+        class Start extends React.Component {
+            render() {
+
+                return (
+                    <div className="globalDiv">
+                        <MyForm />
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <Start />,
+            document.getElementById('react-app')
+        );
+
+    </script>
+</body>
+
+</html>

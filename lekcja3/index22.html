@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .div {
+            border: 3px dotted red;
+            background-color: rgb(231, 231, 231);
+            padding: 1px;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            flex-direction: column;
+        }
+
+        .globalDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        button {
+            width: 70px;
+
+            padding: 5px;
+            text-align: center;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .big {
+            font-size: 70px;
+            color: grey;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .column {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="react-app"></div>
+    <script type="text/babel">
+
+        class MyForm extends React.Component {
+
+            constructor() {
+                super();
+                this.state = {
+                    array: [
+                        { id: 0, name: "Hamlet" },
+                        { id: 1, name: "Krzyzacy" },
+                        { id: 2, name: "Lalka" },
+                        { id: 3, name: "Proces" }
+                    ],
+                    array2: [
+                        { id: 0, name: "Kraków" },
+                        { id: 1, name: "Warszawa" },
+                        { id: 2, name: "Gdańsk" },
+                    ],
+                    data: []
+
+                };
+            }
+
+            handleChange = (event) => {
+                let tmp = this.state.data
+                tmp.push(event)
+                console.log(tmp);
+                this.setState({ data: tmp });
+            }
+
+
+
+            handleSubmit = (event) => {
+                alert(this.state.data)
+                this.setState({
+                    data: []
+                })
+                event.preventDefault();
+            }
+
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit} >
+                        <h1>komponent MyForm</h1>
+                        <MySelect array={this.state.array} handleChange={this.handleChange} />
+                        <MySelect array={this.state.array2} handleChange={this.handleChange} />
+                        <button onClick={this.handleSubmit}>send</button>
+                        <p>Wybrane globalnie: [{this.state.data.toString()}]</p>
+                    </form>
+                );
+            }
+        }
+
+        class MySelect extends React.Component {
+
+            constructor() {
+                super();
+                this.state = {
+                    option: ''
+                }
+            }
+
+            change = (event) => {
+                this.props.handleChange(event.target.value)
+                this.setState({
+                    option: event.target.value
+                })
+            }
+            render() {
+
+                let list = this.props.array
+                let options = []
+                list.forEach(element => {
+                    options.push(<option value={element.name} key={element.id}>{element.name}</option>)
+                });
+
+
+
+
+                return (
+                    <div className="column" style={{
+                        padding: '10px',
+                        margin: '5px',
+                        border: '3px blue dotted',
+                        borderRadius: '5px'
+                    }}>
+                        <h1>komponent MySelect</h1>
+                        <select onChange={this.change}>
+                            {options}
+                        </select>
+                        <p>Wybrany: {this.state.option}</p>
+                    </div>
+                );
+            }
+        }
+
+        class Start extends React.Component {
+            render() {
+
+                return (
+                    <div className="globalDiv">
+                        <MyForm />
+                        <MyForm />
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <Start />,
+            document.getElementById('react-app')
+        );
+
+    </script>
+</body>
+
+</html>
