@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .div {
+            border: 3px dotted red;
+            background-color: rgb(231, 231, 231);
+            padding: 1px;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            flex-direction: column;
+        }
+
+        .globalDiv {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: start;
+            padding: 40px;
+        }
+
+        button {
+            width: 70px;
+
+            padding: 5px;
+            text-align: center;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .big {
+            font-size: 70px;
+            color: grey;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .column {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .text {
+            margin: 0 5px;
+        }
+
+        .midDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border: 3px solid lightblue;
+            border-radius: 10px;
+            background-color: rgb(240, 240, 240);
+            padding: 15px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="react-app"></div>
+    <script type="text/babel">
+
+
+        class Board extends React.Component {
+            render() {
+                const { color, num, selectedTiles, toggleTile, saveData } = this.props;
+                return (
+                    <div className="boardDiv" style={{ display: "flex", backgroundColor: "lightblue", borderRadius: "10px", padding: "10px", justifyContent: "center", alignItems: "Center", flexDirection: "column", width: "200px", margin: "10px", height: "200px" }}>
+                        <p>{num}</p>
+                        <div className="boardDiv" style={{ display: 'flex', flexWrap: 'wrap', width: "120px", margin: "10px", backgroundColor: "lightblue", padding: "10px", borderRadius: "10px" }}>
+                            {selectedTiles.map((selected, index) => (
+                                <Tile
+                                    key={index}
+                                    color={color}
+                                    selected={selected}
+                                    onClick={() => toggleTile(num, index)}
+                                />
+                            ))}
+                        </div>
+                        <button style={{ padding: '5px 10px', backgroundColor: 'lightgreen', border: 'none', borderRadius: '5px', cursor: 'pointer', border: "1px solid green" }} onClick={() => { saveData() }}>zapisz</button>
+                    </div>
+                );
+            }
+        }
+
+        class Tile extends React.Component {
+            render() {
+                const { color, selected, onClick } = this.props;
+                const backgroundColor = selected ? color : 'transparent';
+
+                return (
+                    <div
+                        className="tileDiv"
+                        onClick={onClick}
+                        style={{ backgroundColor, width: '20px', height: '20px', margin: '', border: '1px solid black', borderRadius: '5px', boxSizing: 'border-box' }}
+                    >
+                    </div>
+                );
+            }
+        }
+
+        class Board2 extends React.Component {
+            render() {
+                const { color, num, selectedTiles } = this.props;
+                return (
+                    <div className="boardDiv" style={{ display: "flex", backgroundColor: "lightblue", borderRadius: "10px", padding: "10px", justifyContent: "center", alignItems: "Center", flexDirection: "column", width: "200px", margin: "10px", height: "200px" }}>
+                        <p>{num}</p>
+                        <div className="boardDiv" style={{ display: 'flex', flexWrap: 'wrap', width: "120px", margin: "10px", backgroundColor: "lightblue", padding: "10px", borderRadius: "10px" }}>
+                            {selectedTiles.map((selected, index) => (
+                                <Tile
+                                    key={index}
+                                    color={color}
+                                    selected={selected}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        class Tile2 extends React.Component {
+            render() {
+                const { color, selected } = this.props;
+                const backgroundColor = selected ? color : 'transparent';
+
+                return (
+                    <div
+                        className="tileDiv"
+                        style={{ backgroundColor, width: '20px', height: '20px', margin: '', border: '1px solid black', borderRadius: '5px', boxSizing: 'border-box' }}
+                    >
+                    </div>
+                );
+            }
+        }
+
+        class App extends React.Component {
+            constructor() {
+                super();
+                let tab1 = Array(25).fill(false);
+                let tab2 = Array(25).fill(false);
+                let tab3 = Array(25).fill(false);
+                let tab4 = Array(25).fill(false);
+
+                tab1[0] = true;
+                tab1[1] = true;
+                tab1[2] = true;
+                tab1[3] = true;
+                tab1[4] = true;
+
+                tab2[20] = true;
+                tab2[21] = true;
+                tab2[22] = true;
+                tab2[23] = true;
+                tab2[24] = true;
+
+                tab3[0] = true;
+                tab3[5] = true;
+                tab3[10] = true;
+                tab3[15] = true;
+                tab3[20] = true;
+
+                tab4[4] = true;
+                tab4[9] = true;
+                tab4[14] = true;
+                tab4[19] = true;
+                tab4[24] = true;
+
+                this.state = {
+                    data: [
+                        {
+                            "id": 111,
+                            "kolor": "yellow"
+                        },
+                        {
+                            "id": 222,
+                            "kolor": "red"
+                        },
+                        {
+                            "id": 555,
+                            "kolor": "green"
+                        },
+                        {
+                            "id": 888,
+                            "kolor": "blue"
+                        },
+                        {
+                            "id": 999,
+                            "kolor": "violet"
+                        }
+                    ],
+                    color: "yellow",
+                    tab1: tab1,
+                    tab2: tab2,
+                    tab3: tab3,
+                    tab4: tab4,
+                    saved: []
+                };
+            }
+
+            handleChange = (event) => {
+                this.setState({
+                    color: event.target.value
+                });
+            }
+
+            toggleTile = (board, index) => {
+                this.setState(prevState => {
+                    const newTab = prevState[board].slice();
+                    newTab[index] = !newTab[index];
+                    return { [board]: newTab };
+                });
+            }
+
+            saveTab = (tab, color) => {
+
+                let tmp = this.state.saved;
+                tmp.push({ tab: tab, color: color });
+                console.log(tmp);
+
+
+                this.setState({
+                    saved: tmp
+                });
+            }
+
+            deleteData = () => {
+                this.setState({
+                    saved: []
+                });
+            }
+
+            render() {
+                return (
+                    <div className="globalDiv">
+                        <p style={{ backgroundColor: "lightblue", borderRadius: "10px", padding: "10px", color: "rgb(80, 80, 255)", fontWeight: "800" }}>sprawdzian</p>
+                        <div className="midDiv">
+                            <div className="row">
+                                {this.state.data.map((element, index) => (
+                                    <div key={element.id} style={{ display: "flex" }}>
+                                        <input type="radio" name="color" value={element.kolor} onChange={this.handleChange} defaultChecked={index === 0} />
+                                        <p className="text">{element.kolor}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="row">
+                                <Board color={this.state.color} selectedTiles={this.state.tab1} toggleTile={this.toggleTile} num={"tab1"} saveData={() => this.saveTab(this.state.tab1, this.state.color)} />
+                                <Board color={this.state.color} selectedTiles={this.state.tab2} toggleTile={this.toggleTile} num={"tab2"} saveData={() => this.saveTab(this.state.tab2, this.state.color)} />
+                                <Board color={this.state.color} selectedTiles={this.state.tab3} toggleTile={this.toggleTile} num={"tab3"} saveData={() => this.saveTab(this.state.tab3, this.state.color)} />
+                                <Board color={this.state.color} selectedTiles={this.state.tab4} toggleTile={this.toggleTile} num={"tab4"} saveData={() => this.saveTab(this.state.tab4, this.state.color)} />
+                            </div>
+                            <button style={{ padding: '5px 10px', backgroundColor: 'lightblue', border: 'none', borderRadius: '5px', cursor: 'pointer', border: "1px solid rgb(80,80,255)" }} onClick={() => { this.deleteData() }}>Usuń</button>
+                        </div>
+                        <div>
+                            <p style={{ backgroundColor: "lightblue", borderRadius: "10px", padding: "10px", color: "rgb(80,80,255)", fontWeight: "800", width: "100px" }}>zapisane</p>
+                            <div className="midDiv" style={{ flexDirection: "row", flexWrap: "wrap", maxWidth: "1000px" }}>
+                                {this.state.saved.map((element, index) => (
+                                    <Board2 color={element.color} selectedTiles={element.tab} num={index} key={index} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <App />,
+            document.getElementById('react-app')
+        );
+
+    </script>
+</body>
+
+</html>
